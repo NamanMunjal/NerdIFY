@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<title>NerdIFY</title>
+		<script type="text/javascript" src="/eel.js"></script>
+		<link rel="icon" href="logo.png">
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<h1>NerdIFY</h1>
+		<input id="username"  placeholder="Song Name" type="text">
+		<br>
+		<button onClick="post()">POST</button>
+		<div id="content"></div>
+		
+	</body>
+	<script>
+		async function recv(){
+			while(1==1){
+				let x=await eel.recv()() + '';
+				var file_path = x.split(",")[0];
+				var songname = x.split(",")[1];
+				var oid = x.split(",")[2];
+				if (x=="null"){
+					console.log("nah");
+				}
+				else{
+					img=document.createElement("img");
+					user=document.createElement("h2");
+					cap=document.createElement("audio");
+					cap.controls='controls';
+					cap.src=oid;
+					user.innerHTML="Song Name: "+songname;
+					box=document.getElementById("content");
+					img.src=file_path;
+					img.height=300;
+					img.width=300;
+					box.appendChild(user);
+					box.appendChild(img);
+					box.appendChild(document.createElement("br"));
+					box.appendChild(cap);
+					box.appendChild(document.createElement("br"));
+					box.appendChild(document.createElement("br"));
+				}
+			}
+		}
+		function post(){
+			user=document.getElementById("username").value;
+			eel.post(user);
+		}
+		recv();
+	</script>
+	<style>
+		h1{
+			font-family:'Open Sans';
+			font-size: 60px;
+			color: #FFFFFF;
+			text-align:center;
+		}
+		h2,h3{
+			font-family:'Open Sans';
+			color: #FFFFFF;
+			text-align:center;
+		}
+		body{
+			background: #282828;
+		}
+		input,button{
+			font-family:'Open Sans';
+			border-radius: 20px;
+		}
+		#content{
+			text-align: center;
+			border-radius: 20px;
+			margin: 0px auto;
+			display: block;
+			overflow-y: scroll;
+			height:640px;
+			width:100%;
+			bottom:0;
+		}
+	</style>
+</html>
